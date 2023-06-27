@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView1() {
-        String url = "https://api.openweathermap.org/data/2.5/forecast?id=1630789&amp;appid=3ce001a40393540d4e9a027e45c7cxyz";
+        String url = "https://api.openweathermap.org/data/2.5/forecast?id=1630789&appid=b9ca6756e58c63d263c8d82e856b8d6c";
         AsyncHttpClient ahc = new AsyncHttpClient();
 
         ahc.get(url, new AsyncHttpResponseHandler() {
