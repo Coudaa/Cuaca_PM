@@ -1,10 +1,9 @@
 package com.alfonsusjericho202102287.cuaca;
 
 public class MainModel {
-    private double temp_min;
-    private double temp_max;
+    private double temp_min, temp_max;
 
-    public MainModel(){
+    public MainModel() {
     }
 
     public double getTemp_min() {

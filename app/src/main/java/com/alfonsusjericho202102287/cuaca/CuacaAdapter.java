@@ -15,12 +15,30 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 public class CuacaAdapter extends RecyclerView.Adapter<CuacaViewHolder> {
     private List<ListModel> listModelList;
     private RootModel rm;
 
-    public CuacaAdapter(RootModel rm){
+    public CuacaAdapter(RootModel rm) {
         this.rm = rm;
+
         listModelList = rm.getListModelList();
     }
 
@@ -32,11 +50,11 @@ public class CuacaAdapter extends RecyclerView.Adapter<CuacaViewHolder> {
         return new CuacaViewHolder(view);
     }
 
-    private double toCelcius(double kelvin){
-        return kelvin = 272.15;
+    private double toCelcius(double kelvin) {
+        return kelvin - 275.15;
     }
 
-    public String formatNumber(double number, String format){
+    public String formatNumber(double number, String format) {
         DecimalFormat decimalFormat = new DecimalFormat(format);
         return decimalFormat.format(number);
     }
@@ -50,95 +68,79 @@ public class CuacaAdapter extends RecyclerView.Adapter<CuacaViewHolder> {
         String suhu = formatNumber(toCelcius(mm.getTemp_min()), "###.##") + "°C - " +
                 formatNumber(toCelcius(mm.getTemp_max()), "###.##") + "°C";
 
-        switch (wm.getIcon()){
+        switch (wm.getIcon()) {
             case "01d":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_01d);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_01d);
                 break;
-
             case "01n":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_01n);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_01n);
                 break;
-
             case "02d":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_02d);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_02d);
                 break;
-
             case "02n":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_02n);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_02n);
                 break;
-
             case "03d":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_03d);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_03d);
                 break;
-
             case "03n":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_03n);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_03n);
                 break;
-
             case "04d":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_04d);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_04d);
                 break;
-
             case "04n":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_04n);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_04n);
                 break;
-
             case "09d":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_09d);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_09d);
                 break;
-
             case "09n":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_09n);
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_09n);
                 break;
-
-            case "010d":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_10d);
+            case "10d":
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_10d);
                 break;
-
-            case "010n":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_10n);
+            case "10n":
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_10n);
                 break;
-
-            case "011d":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_11d);
+            case "11d":
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_11d);
                 break;
-
-            case "011n":
-                holder.cuacaIamgeView.setImageResource(R.mipmap.ic_11n);
+            case "11n":
+                holder.cuacaImageView.setImageResource(R.mipmap.ic_11n);
                 break;
         }
-        String tanggalWaktuWIB = formatwib(lm.getDt_txt());
-        
-        holder.namaTV.setText(wm.getMain());
-        holder.deskripsiTV.setText(wm.getDescription());
-        holder.tglWaktuTV.setText(tanggalWaktuWIB);
-        holder.suhuTV.setText(suhu);
-    }
+        String tanggalWaktuWIB = formatWIB(lm.getDt_txt());
 
-    private String formatwib(String tanggalWaktuGmt_string) {
-        Log.d("*tw*", "Waktu GMT : " + tanggalWaktuGmt_string);
-        Date tanggalWaktuGmt = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        try {
-            tanggalWaktuGmt = sdf.parse(tanggalWaktuGmt_string);
-        }
-        catch (ParseException e){
-            Log.e("*tw*", e.getMessage());
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(tanggalWaktuGmt);
-        calendar.add(Calendar.HOUR_OF_DAY, 7);
-        Date tanggalWaktiWib = calendar.getTime();
-        String tanggalWaktuWib_string = sdf.format(tanggalWaktiWib);
-        tanggalWaktuWib_string = tanggalWaktuWib_string.replace("00:00", "00 WIB");
-        Log.d("*tw*", "Tanggal Waktu Indonesia Barat : " + tanggalWaktuWib_string);
-
-        return tanggalWaktuGmt_string;
+        holder.namaTextView.setText(wm.getMain());
+        holder.deskripsiTextView.setText(wm.getDescription());
+        holder.tglWaktuTextView.setText(tanggalWaktuWIB);
+        holder.suhuTextView.setText(suhu);
     }
 
     @Override
     public int getItemCount() {
-        return (listModelList != null ? listModelList.size() : 0);
+        return (listModelList != null) ? listModelList.size() : 0;
+    }
+
+    private String formatWIB(String tanggalWaktuGMT_string) {
+        Log.d("*tw*", "Waktu GMT : " + tanggalWaktuGMT_string);
+
+        Date tanggalWaktuGMT = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try {
+            tanggalWaktuGMT = sdf.parse(tanggalWaktuGMT_string);
+        } catch (ParseException e) {
+            Log.e("*tw*", e.getMessage());
+        }
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(tanggalWaktuGMT);
+
+        return tanggalWaktuGMT_string;
     }
 }
+

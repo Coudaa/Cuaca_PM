@@ -14,9 +14,24 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.os.Bundle;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import cz.msebera.android.httpclient.Header;
+
 public class MainActivity extends AppCompatActivity {
+
     private RecyclerView _recyclerView1;
-    private SwipeRefreshLayout _SwipeRefreshLayout1;
+    private SwipeRefreshLayout _swipeRefreshLayout1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,18 +39,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         _recyclerView1 = findViewById(R.id.recyclerView1);
-        _SwipeRefreshLayout1 = findViewById(R.id.swipe1);
+        _swipeRefreshLayout1 = findViewById(R.id.swipeRefreshLayout1);
 
         initRecyclerView1();
         initSwipeRefreshLayout();
     }
 
     private void initSwipeRefreshLayout() {
-        _SwipeRefreshLayout1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        _swipeRefreshLayout1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 initRecyclerView1();
-                _SwipeRefreshLayout1.setRefreshing(false);
+                _swipeRefreshLayout1.setRefreshing(false);
             }
         });
     }
@@ -58,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

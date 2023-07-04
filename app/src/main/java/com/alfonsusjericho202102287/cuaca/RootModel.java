@@ -4,16 +4,22 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class RootModel {
-    @SerializedName("List")
+    @SerializedName("list")
     private List<ListModel> listModelList;
 
-    public RootModel(){
-
+    public RootModel() {
     }
 
-    public List<ListModel> getListModelList(){return listModelList;}
-    public void setListModelList(List<ListModel> listModelList){
+    public List<ListModel> getListModelList() {
+        return listModelList;
+    }
+
+    public void setListModelList(List<ListModel> listModelList) {
         this.listModelList = listModelList;
     }
 }

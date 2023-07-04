@@ -2,9 +2,7 @@ package com.alfonsusjericho202102287.cuaca;
 
 
 public class WeatherModel {
-    private String main;
-    private String description;
-    private String icon;
+    private String main, description, icon;
 
     public WeatherModel() {
     }
